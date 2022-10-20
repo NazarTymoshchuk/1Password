@@ -28,5 +28,10 @@ namespace _1Password
 
             // test
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            listApp.Items.Add("");
+        }
     }
 }
