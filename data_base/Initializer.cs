@@ -22,6 +22,18 @@ namespace data_base
                 }
             );*/
         }
+        public static void SeedCategories(this ModelBuilder modelBuilder)
+        {
+            /*modelBuilder.Entity<Category>().HasData(new Category[]
+                {
+                    new Category()
+                    {
+                        Id = 1,
+                        Name = "Category1",
+                    },
+                }
+            );*/
+        }
         public static void SeedAccounts(this ModelBuilder modelBuilder)
         {
             /*modelBuilder.Entity<Account>().HasData(new Account[]
@@ -32,6 +44,7 @@ namespace data_base
                         Password = "4321",
                         Name = "Facebook",
                         UserId = 1,
+                        CategoryId = 1,
                     },
                     new Account()
                     {
@@ -39,6 +52,7 @@ namespace data_base
                         Password = "4321",
                         Name = "Telegram",
                         UserId = 1,
+                        CategoryId = 1,
                     },
                 }
             );*/

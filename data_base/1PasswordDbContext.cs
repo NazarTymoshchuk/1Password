@@ -16,7 +16,7 @@ namespace data_base
     {
         public OnePasswordDbContext()
         {
-            //this.Database.EnsureDeleted();
+            this.Database.EnsureDeleted();
             this.Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -28,9 +28,12 @@ namespace data_base
         {
             modelBuilder.SeedAccounts();
             modelBuilder.SeedClients();
+            modelBuilder.SeedCategories();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfig).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfig).Assembly);
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<Category> Categories { get; set; }
     }
 }
