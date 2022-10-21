@@ -23,6 +23,15 @@ namespace _1Password
         public MainWindow()
         {
             InitializeComponent();
+
+
+
+            // test
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            listApp.Items.Add("");
         }
     }
 }
