@@ -35,7 +35,7 @@
             <RowDefinition/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <TextBlock Foreground="Aquamarine" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"
+        <TextBlock Foreground="#00e5ff" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"
             Style="{StaticResource MaterialDesignHeadline6TextBlock}"
             Text="Sign Up" />
         <DockPanel  Grid.Row="1" LastChildFill="False">
@@ -43,8 +43,7 @@
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 VerticalAlignment="Top"
                 IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}"/>
-            <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
-                Foreground="Aquamarine"
+            <TextBlock DockPanel.Dock="Bottom" Margin="10, 0" Foreground="White"
                 Text="Username" />
         </DockPanel>
         <DockPanel Grid.Row="2" LastChildFill="False">
@@ -53,7 +52,7 @@
                 IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
                 materialDesign:TextFieldAssist.HasClearButton="True"/>
             <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
-                Foreground="Aquamarine"
+                Foreground="White"
                 Text="Password" />
         </DockPanel>
         <DockPanel Grid.Row="3" LastChildFill="False">
@@ -65,10 +64,10 @@
                 IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
                 materialDesign:TextFieldAssist.HasClearButton="True"/>
             <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
-                Foreground="Aquamarine"
+                Foreground="White"
                 Text="Repeat Password" />
         </DockPanel>
-        <Button Grid.Row="4" Height="50" Background="#00e5ff" Foreground="White" FontSize="20"
+        <Button Grid.Row="4" Height="50" Foreground="Black" FontSize="20" Background="#00e5ff"
             Style="{StaticResource MaterialDesignRaisedDarkButton}"
             materialDesign:ButtonAssist.CornerRadius="15"
             ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
