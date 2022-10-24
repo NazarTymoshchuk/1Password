@@ -10,24 +10,25 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace _1Password
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for Registration.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class Registration : Window
     {
-        public MainWindow(string username, string password)
+        public Registration()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            listApp.Items.Add("");
+            MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password);
+            main.Show();
+            this.Close();
         }
     }
 }
