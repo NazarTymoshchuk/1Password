@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="MainWindow" Height="500" Width="400">
+        Title="MainWindow" Height="700" Width="400">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -31,9 +31,14 @@
         <Grid.RowDefinitions>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
-        <DockPanel LastChildFill="False">
+        <TextBlock Foreground="Aquamarine" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="40"
+            Style="{StaticResource MaterialDesignHeadline6TextBlock}"
+            Text="Sign Up" />
+        <DockPanel  Grid.Row="1" LastChildFill="False">
             <TextBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtUsername"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 VerticalAlignment="Top"
@@ -42,7 +47,7 @@
                 Foreground="Aquamarine"
                 Text="Username" />
         </DockPanel>
-        <DockPanel Grid.Row="1" LastChildFill="False">
+        <DockPanel Grid.Row="2" LastChildFill="False">
             <PasswordBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtPassword"
                 Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
                 IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
@@ -51,7 +56,19 @@
                 Foreground="Aquamarine"
                 Text="Password" />
         </DockPanel>
-        <Button Grid.Row="2" Height="50" Background="Aquamarine" Foreground="#FF01104A" FontSize="20"
+        <DockPanel Grid.Row="3" LastChildFill="False">
+            <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
+                Name="txtError"
+                Foreground="red"/>
+            <PasswordBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtComfirmPassword"
+                Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
+                IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
+                materialDesign:TextFieldAssist.HasClearButton="True"/>
+            <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
+                Foreground="Aquamarine"
+                Text="Repeat Password" />
+        </DockPanel>
+        <Button Grid.Row="4" Height="50" Background="#00e5ff" Foreground="White" FontSize="20"
             Style="{StaticResource MaterialDesignRaisedDarkButton}"
             materialDesign:ButtonAssist.CornerRadius="15"
             ToolTip="MaterialDesignRaisedDarkButton with Round Corners"
