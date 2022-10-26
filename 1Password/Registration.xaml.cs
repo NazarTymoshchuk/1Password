@@ -26,9 +26,15 @@ namespace _1Password
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password);
-            main.Show();
-            this.Close();
+            if (txtPassword.Password == txtComfirmPassword.Password)
+            {
+                MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password);
+                main.Show();
+                this.Close();
+            }
+            txtError.Text = "Try again!";
+            txtComfirmPassword.Password = "";
+            txtPassword.Password = "";
         }
     }
 }

@@ -63,8 +63,7 @@
                             <TextBox Margin="5"
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                 materialDesign:HintAssist.Hint="Search All Accounts"/>
-                            <Button Grid.Column="1" Margin="5"
-                                    Background="#02b9ce"
+                            <Button Grid.Column="1" Margin="5" Background="#00bcd4"
                                     Style="{StaticResource MaterialDesignRaisedDarkButton}"                                 
                                     materialDesign:ButtonAssist.CornerRadius="10"
                                     ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click">
@@ -94,8 +93,7 @@
                                     ToolTip="MaterialDesignIconButton"
                                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                                 <materialDesign:PackIcon
-                                        Kind="SortAlphabeticalAscending" 
-                                        Foreground="#52a2af"/>
+                                        Kind="SortAlphabeticalAscending" />
                             </Button>
                         </DockPanel>
                         <ListBox Name="listApp" DockPanel.Dock="Top">
