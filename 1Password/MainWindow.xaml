@@ -106,40 +106,40 @@
                                         </Grid.RowDefinitions>
                                         <DockPanel LastChildFill="False">
                                             <Border BorderBrush="Aqua"
-                                                BorderThickness="2"
-                                                CornerRadius="50"
-                                                Width="70"
-                                                Height="70"
-                                                Margin="20, 10"/>
+                                            BorderThickness="2"
+                                            CornerRadius="50"
+                                            Width="70"
+                                            Height="70"
+                                            Margin="20, 10"/>
                                             <TextBlock Text="1Password" VerticalAlignment="Center" FontSize="26" Margin="5"/>
                                             <ToggleButton DockPanel.Dock="Right" Margin="10"
-                                                        Foreground="#ffc107"
-                                                        Style="{StaticResource MaterialDesignActionToggleButton}"
-                                                        ToolTip="MaterialDesignActionLightToggleButton"
-                                                        Content="{materialDesign:PackIcon Kind=StarOutline}"
-                                                        materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
-                                                        IsChecked="False"/>
+                                                    Foreground="#ffc107"
+                                                    Style="{StaticResource MaterialDesignActionToggleButton}"
+                                                    ToolTip="MaterialDesignActionLightToggleButton"
+                                                    Content="{materialDesign:PackIcon Kind=StarOutline}"
+                                                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
+                                                    IsChecked="False"/>
                                             <Button DockPanel.Dock="Right"
-                                                    Foreground="#FF26D8FF"
-                                                    Style="{StaticResource MaterialDesignIconButton}"
-                                                    ToolTip="MaterialDesignIconButton"
-                                                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                Foreground="#FF26D8FF"
+                                                Style="{StaticResource MaterialDesignIconButton}"
+                                                ToolTip="MaterialDesignIconButton"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                                                 <materialDesign:PackIcon
-                                                   Kind="Edit"/>
+                                                Kind="Edit"/>
                                             </Button>
                                         </DockPanel>
                                         <DockPanel Grid.Row="1" LastChildFill="False">
                                             <TextBox DockPanel.Dock="Bottom" Margin="10"
-                                                materialDesign:HintAssist.Hint="Website"
-                                                Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                                VerticalAlignment="Center" />
+                                            materialDesign:HintAssist.Hint="Website"
+                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                            VerticalAlignment="Center" />
                                             <PasswordBox Margin="10, 0"
-                                                Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
-                                                IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
-                                                materialDesign:HintAssist.Hint="Password"/>
+                                            Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
+                                            IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
+                                            materialDesign:HintAssist.Hint="Password"/>
                                             <TextBox Margin="10, 0"
-                                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                                materialDesign:HintAssist.Hint="Username"/>
+                                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
+                                            materialDesign:HintAssist.Hint="Username"/>
                                         </DockPanel>
                                     </Grid>
                                 </DataTemplate>
