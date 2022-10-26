@@ -10,34 +10,31 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace _1Password
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for AddNewItem.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class AddNewItem : Window
     {
-        public MainWindow(string name, string password, string username, string? website)
-        {
-            InitializeComponent();
-        }
-        public MainWindow(string username, string password)
-        {
-            InitializeComponent();
-        }
-
-        public MainWindow()
+        public AddNewItem()
         {
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddNewItem item = new AddNewItem();
-            item.Show();
+            MainWindow main = new MainWindow(txtName.Text, txtPassword.Password, txtUsername.Text, txtWebsite.Text);
+            main.Show();
+            this.Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            MainWindow main = new MainWindow();
+            main.Show();
             this.Close();
         }
     }
