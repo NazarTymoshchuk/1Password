@@ -33,7 +33,7 @@ namespace _1Password
             //main.Show();
             //this.Close();
 
-            if (txtName.Text != "" && txtUsername.Text != "" && txtPassword.Password != "" && txtWebsite.Text != "")
+            if (txtName.Text != "" && txtPassword.Password != "")
             {
                 viewModel.AddAccount(new AccountInfo() // new item inserting without MainWindow closing
                 {
