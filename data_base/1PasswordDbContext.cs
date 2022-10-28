@@ -16,13 +16,14 @@ namespace data_base
     {
         public OnePasswordDbContext()
         {
-            this.Database.EnsureDeleted();
-            this.Database.EnsureCreated();
+            //this.Database.EnsureDeleted();
+            //this.Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-            optionsBuilder.UseSqlServer(); // server connection string
+
+            optionsBuilder.UseSqlServer(@"Data Source=1PasswordDb.mssql.somee.com;initial catalog=1PasswordDb;User ID=Nazar_SQLLogin_1;Password=s1m4ra7oyo;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
