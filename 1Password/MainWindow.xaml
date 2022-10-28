@@ -13,6 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
+        d:DataContext="{d:DesignInstance local:ViewModel, IsDesignTimeCreatable=True}"
         Title="MainWindow" Height="600" Width="1000">
     <Window.Resources>
         <ResourceDictionary>
@@ -96,7 +97,7 @@
                                         Kind="SortAlphabeticalAscending" />
                             </Button>
                         </DockPanel>
-                        <ListBox Name="listApp" DockPanel.Dock="Top">
+                        <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" DockPanel.Dock="Top">
                             <ListBox.ItemTemplate>
                                 <DataTemplate>
                                     <Grid>
@@ -111,7 +112,7 @@
                                             Width="70"
                                             Height="70"
                                             Margin="20, 10"/>
-                                            <TextBlock Text="1Password" VerticalAlignment="Center" FontSize="26" Margin="5"/>
+                                            <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="26" Margin="5"/>
                                             <ToggleButton DockPanel.Dock="Right" Margin="10"
                                                     Foreground="#ffc107"
                                                     Style="{StaticResource MaterialDesignActionToggleButton}"
@@ -132,14 +133,16 @@
                                             <TextBox DockPanel.Dock="Bottom" Margin="10"
                                             materialDesign:HintAssist.Hint="Website"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                            VerticalAlignment="Center" />
+                                            VerticalAlignment="Center" 
+                                            Text="{Binding LinkToSite, Mode=TwoWay}"/>
                                             <PasswordBox Margin="10, 0"
                                             Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
                                             IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
                                             materialDesign:HintAssist.Hint="Password"/>
                                             <TextBox Margin="10, 0"
                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                            materialDesign:HintAssist.Hint="Username"/>
+                                            materialDesign:HintAssist.Hint="Username"
+                                            Text="{Binding UserName, Mode=TwoWay}"/>
                                         </DockPanel>
                                     </Grid>
                                 </DataTemplate>
