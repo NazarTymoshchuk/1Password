@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using data_base;
+using data_base.Entities;
 
 namespace _1Password
 {
@@ -19,9 +21,12 @@ namespace _1Password
     /// </summary>
     public partial class Login : Window
     {
+        OnePasswordDbContext context;
         public Login()
         {
             InitializeComponent();
+
+            context = new OnePasswordDbContext();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -33,9 +38,20 @@ namespace _1Password
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            MainWindow mainWindow = new MainWindow(txtUsername.Text, txtPassword.Password);
-            mainWindow.Show();
-            this.Close();
+            if (context.Users.FirstOrDefault(u => u.Username == txtUsername.Text) != null)
+            {
+                User user = context.Users.Where(u => u.Username == txtUsername.Text).FirstOrDefault();
+                if (user.Password == txtPassword.Password)
+                {
+                    MainWindow mainWindow = new MainWindow(txtUsername.Text, txtPassword.Password, true);
+                    mainWindow.Show();
+                    this.Close();
+                }              
+            }
+            else
+            {
+                txtIncorrect.Text = "Incorrect login or password";
+            }
         }
     }
 }

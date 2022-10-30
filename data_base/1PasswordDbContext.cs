@@ -1,5 +1,4 @@
-﻿using Azure.Identity;
-using data_base.Configurations;
+﻿using data_base.Configurations;
 using data_base.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -23,15 +22,17 @@ namespace data_base
         {
             base.OnConfiguring(optionsBuilder);
 
-            optionsBuilder.UseSqlServer(@"Data Source=1PasswordDb.mssql.somee.com;initial catalog=1PasswordDb;User ID=Nazar_SQLLogin_1;Password=s1m4ra7oyo;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            string connect = @"workstation id=1PasswordDb.mssql.somee.com;packet size=4096;user id=Nazar_SQLLogin_1;pwd=s1m4ra7oyo;data source=1PasswordDb.mssql.somee.com;persist security info=False;initial catalog=1PasswordDb";
+
+            optionsBuilder.UseSqlServer(connect);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.SeedAccounts();
-            modelBuilder.SeedClients();
-            modelBuilder.SeedCategories();
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfig).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfig).Assembly);
+            modelBuilder.SeedClients();
+            modelBuilder.SeedAccounts();
+            modelBuilder.SeedCategories();
         }
         public DbSet<User> Users { get; set; }
         public DbSet<Account> Accounts { get; set; }

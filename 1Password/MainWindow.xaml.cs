@@ -22,14 +22,7 @@ namespace _1Password
     public partial class MainWindow : Window
     {
         ViewModel viewModel;
-        /*public MainWindow(string name, string password, string username, string? website)
-        {
-            InitializeComponent();
-            this.DataContext = viewModel;
-            // password encryption
-            viewModel.AddAccount(new AccountInfo() { Name = name, UserName = username, Password = password, LinkToSite = website });
-        }*/
-        public MainWindow(string username, string password)
+        public MainWindow(string username, string password, bool isAlreadyLogin)
         {
             InitializeComponent();
             viewModel = new ViewModel();
@@ -42,11 +35,7 @@ namespace _1Password
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            //AddNewItem item = new AddNewItem();
-            //item.Show();
-            //this.Close();
-     
+        {    
             AddNewItem item = new AddNewItem(viewModel); // new AddNewItem window invoke
             item.Show();
         }
