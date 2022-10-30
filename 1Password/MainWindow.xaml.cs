@@ -38,8 +38,8 @@ namespace _1Password
                     Username = username,
                     Password = password,
                 });
-                viewModel.CurrentUser = user;
                 viewModel.onePasswordDbContext.SaveChanges();
+                viewModel.CurrentUser = viewModel.onePasswordDbContext.Users.Where(u => u.Username == username).FirstOrDefault();
             }
             this.DataContext = viewModel;
         }
@@ -50,7 +50,7 @@ namespace _1Password
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {    
+        {
             AddNewItem item = new AddNewItem(viewModel); // new AddNewItem window invoke
             item.Show();
         }
