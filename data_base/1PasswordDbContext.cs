@@ -22,8 +22,7 @@ namespace data_base
         {
             base.OnConfiguring(optionsBuilder);
 
-            string connect = @"Data Source=DESKTOP-8DFR7S5;Initial Catalog=PasswordProg;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False"; 
-            //@"workstation id=1PasswordDb.mssql.somee.com;packet size=4096;user id=Nazar_SQLLogin_1;pwd=s1m4ra7oyo;data source=1PasswordDb.mssql.somee.com;persist security info=False;initial catalog=1PasswordDb";
+            string connect = @"workstation id=1PasswordDb.mssql.somee.com;packet size=4096;user id=Nazar_SQLLogin_1;pwd=s1m4ra7oyo;data source=1PasswordDb.mssql.somee.com;persist security info=False;initial catalog=1PasswordDb"; 
             optionsBuilder.UseSqlServer(connect);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
