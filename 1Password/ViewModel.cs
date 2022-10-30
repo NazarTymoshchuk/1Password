@@ -14,7 +14,7 @@ namespace _1Password
     [AddINotifyPropertyChangedInterface]
     public class ViewModel
     {
-        //OnePasswordDbContext onePasswordDbContext = new OnePasswordDbContext(); // to connect AccountsInfo with Accounts in DB
+        public OnePasswordDbContext onePasswordDbContext = new OnePasswordDbContext(); // to connect AccountsInfo with Accounts in DB
         private ObservableCollection<AccountInfo> accounts;
 
         public ViewModel()
@@ -26,13 +26,21 @@ namespace _1Password
         public void AddAccount(AccountInfo account)
         {
             accounts.Add(account);
+            onePasswordDbContext.Accounts.Add(new Account()
+            {
+                Name = account.Name,
+                Password = account.Password,
+                UserId = CurrentUser.Id,
+                UserName = account.UserName,
+                LinkToSite = account.LinkToSite,
+            });
+            onePasswordDbContext.SaveChanges();
         }
         public void ClearAccounts()
         {
             accounts.Clear();
         }
     }
-
     [AddINotifyPropertyChangedInterface]
     public class AccountInfo
     {
