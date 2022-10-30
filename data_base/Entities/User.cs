@@ -12,6 +12,7 @@ namespace data_base.Entities
         public int Id { get; set; }
         [Required, MaxLength(16)]
         public string Password { get; set; }
+        [Required]
         public string Username { get; set; }
         public ICollection<Account> Accounts { get; set; }
     }

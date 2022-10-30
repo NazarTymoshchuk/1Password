@@ -46,6 +46,8 @@
                 Text="Username" />
         </DockPanel>
         <DockPanel Grid.Row="2" LastChildFill="False" VerticalAlignment="Center">
+            <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
+                Foreground="Red" Name="txtIncorrect"/>
             <PasswordBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtPassword"
                 Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
                 IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"

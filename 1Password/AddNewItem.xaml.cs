@@ -29,10 +29,6 @@ namespace _1Password
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            //MainWindow main = new MainWindow(txtName.Text, txtPassword.Password, txtUsername.Text, txtWebsite.Text);
-            //main.Show();
-            //this.Close();
-
             if (txtName.Text != "" && txtPassword.Password != "")
             {
                 viewModel.AddAccount(new AccountInfo() // new item inserting without MainWindow closing
@@ -52,8 +48,6 @@ namespace _1Password
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            //MainWindow main = new MainWindow();
-            //main.Show();
             this.Close();
         }
     }

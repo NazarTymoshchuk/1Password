@@ -20,22 +20,35 @@ namespace _1Password
     /// </summary>
     public partial class Registration : Window
     {
+        OnePasswordDbContext context;
         public Registration()
         {
             InitializeComponent();
+
+            context = new OnePasswordDbContext();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (txtPassword.Password == txtComfirmPassword.Password)
+            if (context.Users.FirstOrDefault(u => u.Username == txtUsername.Text) == null)
             {
-                MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password);
-                main.Show();
-                this.Close();
+                if (txtPassword.Password == txtComfirmPassword.Password)
+                {
+                    MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password, false);
+                    main.Show();
+                    this.Close();
+                }
+                else
+                {
+                    txtError.Text = "Try again!";
+                    txtComfirmPassword.Password = "";
+                    txtPassword.Password = "";
+                }
             }
-            txtError.Text = "Try again!";
-            txtComfirmPassword.Password = "";
-            txtPassword.Password = "";
+            else
+            {
+                txtUsernameTaken.Text = "Username is already taken";
+            }          
         }
     }
 }
