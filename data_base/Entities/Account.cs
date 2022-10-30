@@ -19,7 +19,7 @@ namespace data_base.Entities
         [MaxLength(100)]
         public string UserName { get; set; }
         public string LinkToSite { get; set; }
-        public int CategoryId { get; set; }
+        public int? CategoryId { get; set; }
         public Category Category { get; set; }
     }
 }

@@ -30,7 +30,6 @@ namespace _1Password
         public Login()
         {
             InitializeComponent();
-
             context = new OnePasswordDbContext();
         }
 
@@ -48,7 +47,7 @@ namespace _1Password
                 User user = context.Users.Where(u => u.Username == txtUsername.Text).FirstOrDefault();
                 if (Verify(txtPassword.Password, user.Password))
                 {
-                    MainWindow mainWindow = new MainWindow(txtUsername.Text, txtPassword.Password, true);
+                    MainWindow mainWindow = new MainWindow(txtUsername.Text, txtPassword.Password, user);
                     mainWindow.Show();
                     this.Close();
                 }

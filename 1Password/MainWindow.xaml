@@ -133,7 +133,7 @@
                                             <TextBox DockPanel.Dock="Bottom" Margin="10"
                                             materialDesign:HintAssist.Hint="Website"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                            VerticalAlignment="Center" 
+                                            VerticalAlignment="Center"
                                             Text="{Binding LinkToSite, Mode=TwoWay}"/>
                                             <PasswordBox Margin="10, 0"
                                             Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"

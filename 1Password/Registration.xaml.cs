@@ -39,9 +39,11 @@ namespace _1Password
             {
                 if (txtPassword.Password == txtComfirmPassword.Password)
                 {
+
                     var hash = Hash(txtPassword.Password);
 
-                    MainWindow main = new MainWindow(txtUsername.Text, hash, false);
+                    MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password, null);
+
                     main.Show();
                     this.Close();
                 }
