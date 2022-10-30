@@ -40,7 +40,9 @@ namespace _1Password
                 if (txtPassword.Password == txtComfirmPassword.Password)
                 {
 
-                    var hash = Hash(txtPassword.Password);
+                    string hash = Hash(txtPassword.Password);
+
+                    MessageBox.Show(hash);
 
                     MainWindow main = new MainWindow(txtUsername.Text, hash, null);
 
