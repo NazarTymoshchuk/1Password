@@ -42,7 +42,7 @@ namespace _1Password
 
                     var hash = Hash(txtPassword.Password);
 
-                    MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password, null);
+                    MainWindow main = new MainWindow(txtUsername.Text, hash, null);
 
                     main.Show();
                     this.Close();
