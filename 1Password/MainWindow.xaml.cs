@@ -1,4 +1,5 @@
 ﻿using data_base;
+using data_base.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,10 +23,24 @@ namespace _1Password
     public partial class MainWindow : Window
     {
         ViewModel viewModel;
-        public MainWindow(string username, string password, bool isAlreadyLogin)
+        public MainWindow(string username, string password, User user)
         {
             InitializeComponent();
             viewModel = new ViewModel();
+            if (user != null)
+            {
+                viewModel.CurrentUser = user;
+            }
+            else
+            {
+                viewModel.onePasswordDbContext.Users.Add(new User()
+                {
+                    Username = username,
+                    Password = password,
+                });
+                viewModel.CurrentUser = user;
+                viewModel.onePasswordDbContext.SaveChanges();
+            }
             this.DataContext = viewModel;
         }
 

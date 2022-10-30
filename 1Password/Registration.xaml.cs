@@ -34,7 +34,7 @@ namespace _1Password
             {
                 if (txtPassword.Password == txtComfirmPassword.Password)
                 {
-                    MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password, false);
+                    MainWindow main = new MainWindow(txtUsername.Text, txtPassword.Password, null);
                     main.Show();
                     this.Close();
                 }
