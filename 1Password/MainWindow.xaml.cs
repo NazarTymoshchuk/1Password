@@ -30,16 +30,17 @@ namespace _1Password
             if (user != null)
             {
                 viewModel.CurrentUser = user;
+                viewModel.AddAccountToList();
             }
             else
             {
-                viewModel.onePasswordDbContext.Users.Add(new User()
+                viewModel.context.Users.Add(new User()
                 {
                     Username = username,
                     Password = password,
                 });
-                viewModel.onePasswordDbContext.SaveChanges();
-                viewModel.CurrentUser = viewModel.onePasswordDbContext.Users.Where(u => u.Username == username).FirstOrDefault();
+                viewModel.context.SaveChanges();
+                viewModel.CurrentUser = viewModel.context.Users.Where(u => u.Username == username).FirstOrDefault();
             }
             this.DataContext = viewModel;
         }
