@@ -8,6 +8,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace _1Password
 {
@@ -16,7 +17,8 @@ namespace _1Password
     {
         public OnePasswordDbContext context = new OnePasswordDbContext(); // to connect AccountsInfo with Accounts in DB
         private ObservableCollection<AccountInfo> accounts;
-
+        XORCipher XORcipher = new XORCipher();
+        string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
@@ -29,7 +31,7 @@ namespace _1Password
             context.Accounts.Add(new Account()
             {
                 Name = account.Name,
-                Password = account.Password,
+                Password = XORcipher.Encrypt(account.Password, key),
                 UserId = CurrentUser.Id,
                 UserName = account.UserName,
                 LinkToSite = account.LinkToSite,
@@ -46,7 +48,7 @@ namespace _1Password
                 {
                     Name = item.Name,
                     UserName = item.UserName,
-                    Password = item.Password,
+                    Password = XORcipher.Decrypt(item.Password, key),
                     LinkToSite = item.LinkToSite
                 });
             }
