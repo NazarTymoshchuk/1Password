@@ -10,7 +10,7 @@ namespace data_base.Entities
     public class User
     {
         public int Id { get; set; }
-        [Required]
+        [Required, MaxLength(300)]
         public string Password { get; set; }
         [Required, MaxLength(100)]
         public string Username { get; set; }
