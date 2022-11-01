@@ -19,12 +19,14 @@ namespace _1Password
         private ObservableCollection<AccountInfo> accounts;
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
+
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
         }
         public User CurrentUser { get; set; }
         public IEnumerable<AccountInfo> AccountsInfo => accounts;
+
         public void AddAccount(AccountInfo account)
         {
             accounts.Add(account);
@@ -39,6 +41,40 @@ namespace _1Password
             context.SaveChanges();
         }
 
+        public string CheckDifficulty(string password)
+        {
+            int difficulty = 0;
+            if (password.Any(c => char.IsDigit(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(c => char.IsLetter(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(c => char.IsUpper(c)) && password.Any(c => char.IsLower(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                difficulty++;
+            }
+            if (password.Length > 12)
+            {
+                difficulty++;
+            }
+            switch (difficulty)
+            {
+                case 1: return "Very easy";
+                case 2: return "Easy";
+                case 3: return "Normal";
+                case 4: return "Hard";
+                case 5: return "Very hard";
+                default: return "null";
+            }
+        }
+
         public void AddAccountToList()
         {
             IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
@@ -49,7 +85,8 @@ namespace _1Password
                     Name = item.Name,
                     UserName = item.UserName,
                     Password = XORcipher.Decrypt(item.Password, key),
-                    LinkToSite = item.LinkToSite
+                    LinkToSite = item.LinkToSite,
+                    Difficulty = CheckDifficulty(XORcipher.Decrypt(item.Password, key)),
                 });
             }
         }
@@ -66,5 +103,6 @@ namespace _1Password
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
+        public string Difficulty { get; set; }
     }
 }
