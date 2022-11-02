@@ -59,20 +59,10 @@
                         <Grid DockPanel.Dock="Top">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="3*"/>
-                                <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <TextBox Margin="5"
                                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                 materialDesign:HintAssist.Hint="Search All Accounts"/>
-                            <Button Grid.Column="1" Margin="5" Background="#00bcd4"
-                                    Style="{StaticResource MaterialDesignRaisedDarkButton}"                                 
-                                    materialDesign:ButtonAssist.CornerRadius="10"
-                                    ToolTip="MaterialDesignRaisedDarkButton with Round Corners" Click="Button_Click">
-                                <StackPanel Orientation="Horizontal">
-                                    <materialDesign:PackIcon Margin="2" Kind="Plus" Foreground="#FF000000"></materialDesign:PackIcon>
-                                    <TextBlock Margin="2" Foreground="#FF000000">New Item</TextBlock>
-                                </StackPanel>
-                            </Button>
                         </Grid>
                         <DockPanel LastChildFill="False" DockPanel.Dock="Top">
                             <ComboBox Width="150" Margin="15, 0, 0, 0"
@@ -97,57 +87,76 @@
                                         Kind="SortAlphabeticalAscending" />
                             </Button>
                         </DockPanel>
-                        <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" DockPanel.Dock="Top">
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition/>
-                                            <RowDefinition/>
-                                        </Grid.RowDefinitions>
-                                        <DockPanel LastChildFill="False">
-                                            <Border BorderBrush="Aqua"
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="5*"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Button HorizontalAlignment="Right" Margin="0, 0, 20, 10" Grid.Row="1" Click="Button_Click"
+                            Foreground="Black" Panel.ZIndex="1" Background="#00bcd4"
+                            Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
+                            Content="{materialDesign:PackIcon Kind=Plus,Size=25}"
+                            IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                            </Button>
+                            <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" Grid.RowSpan="2">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition/>
+                                                <RowDefinition/>
+                                            </Grid.RowDefinitions>
+                                            <DockPanel LastChildFill="False">
+                                                <Border BorderBrush="Aqua"
                                             BorderThickness="2"
                                             CornerRadius="50"
                                             Width="70"
                                             Height="70"
                                             Margin="20, 10"/>
-                                            <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="26" Margin="5"/>
-                                            <ToggleButton DockPanel.Dock="Right" Margin="10"
+                                                <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="26" Margin="5"/>
+                                                <Button DockPanel.Dock="Right" Command="{Binding DeleteCmd}"
+                                                Style="{StaticResource MaterialDesignIconButton}"
+                                                ToolTip="MaterialDesignIconButton"
+                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                    <materialDesign:PackIcon
+                                                    Kind="DeleteForever" />
+                                                </Button>
+                                                <ToggleButton DockPanel.Dock="Right" Margin="10"
                                                     Foreground="#ffc107"
                                                     Style="{StaticResource MaterialDesignActionToggleButton}"
                                                     ToolTip="MaterialDesignActionLightToggleButton"
                                                     Content="{materialDesign:PackIcon Kind=StarOutline}"
                                                     materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
                                                     IsChecked="False"/>
-                                            <Button DockPanel.Dock="Right"
+                                                <Button DockPanel.Dock="Right"
                                                 Foreground="#FF26D8FF"
                                                 Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="MaterialDesignIconButton"
+                                                
                                                 IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
-                                                <materialDesign:PackIcon
+                                                    <materialDesign:PackIcon
                                                 Kind="Edit"/>
-                                            </Button>
-                                        </DockPanel>
-                                        <DockPanel Grid.Row="1" LastChildFill="False">
-                                            <TextBox DockPanel.Dock="Bottom" Margin="10"
+                                                </Button>
+                                            </DockPanel>
+                                            <DockPanel Grid.Row="1" LastChildFill="False">
+                                                <TextBox DockPanel.Dock="Bottom" Margin="10" Width="1800"
                                             materialDesign:HintAssist.Hint="Website"
                                             Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                                             VerticalAlignment="Center"
                                             Text="{Binding LinkToSite, Mode=TwoWay}"/>
-                                            <PasswordBox Margin="10, 0"
+                                                <PasswordBox Margin="10, 0"
                                             Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
                                             IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
                                             materialDesign:HintAssist.Hint="Password"/>
-                                            <TextBox Margin="10, 0"
+                                                <TextBox Margin="10, 0"
                                             Style="{StaticResource MaterialDesignOutlinedTextBox}"
                                             materialDesign:HintAssist.Hint="Username"
                                             Text="{Binding UserName, Mode=TwoWay}"/>
-                                        </DockPanel>
-                                    </Grid>
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>
+                                            </DockPanel>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </Grid>
                     </DockPanel>
                 </TabItem>
                 <TabItem>
