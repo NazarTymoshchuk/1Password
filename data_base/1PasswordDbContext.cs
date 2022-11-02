@@ -19,7 +19,7 @@ namespace data_base
         public OnePasswordDbContext()
         {
             //this.Database.EnsureDeleted();
-            //this.Database.EnsureCreated();
+            this.Database.EnsureCreated();
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
