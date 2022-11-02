@@ -61,7 +61,6 @@ namespace _1Password
             accounts.Add(info);
         }
 
-        
         public string CheckDifficulty(string password)
         {
             int difficulty = 0;
@@ -131,7 +130,7 @@ namespace _1Password
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
-        public RelayCommand MyProperty { get; set; }
+        public RelayCommand deleteCommand { get; set; }
         public ICommand DeleteCmd => deleteCommand;
         public string Difficulty { get; set; }
 
