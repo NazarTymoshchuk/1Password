@@ -55,5 +55,10 @@ namespace _1Password
             AddNewItem item = new AddNewItem(viewModel); // new AddNewItem window invoke
             item.Show();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            viewModel.SortByName();
+        }
     }
 }
