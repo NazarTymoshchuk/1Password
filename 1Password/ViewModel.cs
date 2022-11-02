@@ -106,10 +106,23 @@ namespace _1Password
             }
         }
 
+        private bool IsSortDesc = false;
         public void SortByName()
         {
+            IQueryable<Account> collection;
             ClearAccounts();
-            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id).OrderBy(a => a.Name);
+
+            if (IsSortDesc)
+            {
+                collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id).OrderBy(a => a.Name);
+                IsSortDesc = false;
+            }
+            else
+            {
+                collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id).OrderByDescending(a => a.Name);
+                IsSortDesc = true;
+            }
+
             foreach (var item in collection)
             {
                 AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
