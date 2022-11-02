@@ -50,7 +50,7 @@ namespace _1Password
 
         public void AddAccountToList(string name, string username, string password, string linkToSite, Account account)
         {
-            var info = new AccountInfo(name, username, XORcipher.Decrypt(password, key), linkToSite);
+            var info = new AccountInfo(name, username, password, linkToSite);
 
             info.SetCommandDelete((o) =>
             {
@@ -67,7 +67,7 @@ namespace _1Password
                 context.SaveChanges();
             });
 
-            info.Difficulty = CheckDifficulty(XORcipher.Decrypt(password, key));
+            info.Difficulty = CheckDifficulty(password);
 
             accounts.Add(info);
         }
