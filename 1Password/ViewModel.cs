@@ -1,5 +1,6 @@
 ﻿using data_base;
 using data_base.Entities;
+using data_base.Repositories;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -77,7 +78,8 @@ namespace _1Password
 
         public void AddAccountToList()
         {
-            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
+            IRepository<Account> accountRepo = new Repository<Account>(context);
+            IQueryable<Account> collection = (IQueryable<Account>)accountRepo.GetAll().Where(a => a.UserId == CurrentUser.Id);
             foreach (var item in collection)
             {
                 accounts.Add(new AccountInfo()
