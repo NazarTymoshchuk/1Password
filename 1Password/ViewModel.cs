@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Xml.Linq;
 
 namespace _1Password
 {
@@ -55,6 +56,14 @@ namespace _1Password
             {
                 context.Accounts.Remove(account);
                 accounts.Remove(info);
+                context.SaveChanges();
+            });
+            info.SetCommandChange((o) =>
+            {
+                account.Password = XORcipher.Encrypt(info.Password, key);
+                account.UserName = info.UserName;
+                account.LinkToSite = info.LinkToSite;
+                context.Accounts.Update(account);
                 context.SaveChanges();
             });
 
@@ -137,13 +146,18 @@ namespace _1Password
         {
             deleteCommand = new RelayCommand((o) => action(o));
         }
-
+        public void SetCommandChange(Action<object> action)
+        {
+            changeCommand = new RelayCommand((o) => action(o));
+        }
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
         private RelayCommand deleteCommand;
+        private RelayCommand changeCommand;
         public ICommand DeleteCmd => deleteCommand;
+        public ICommand ChangeCmd => changeCommand;
         public string Difficulty { get; set; }
 
     }
