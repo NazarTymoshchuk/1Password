@@ -58,6 +58,8 @@ namespace _1Password
                 context.SaveChanges();
             });
 
+            info.Difficulty = CheckDifficulty(XORcipher.Decrypt(password, key));
+
             accounts.Add(info);
         }
 
@@ -100,7 +102,7 @@ namespace _1Password
             IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
             foreach (var item in collection)
             {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);           
             }
         }
 
