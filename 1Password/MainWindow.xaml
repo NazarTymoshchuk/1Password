@@ -98,6 +98,7 @@
                             Content="{materialDesign:PackIcon Kind=Plus,Size=25}"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                             </Button>
+                            
                             <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" Grid.RowSpan="2">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
@@ -139,18 +140,41 @@
                                             </DockPanel>
                                             <DockPanel Grid.Row="1" LastChildFill="False">
                                                 <TextBox DockPanel.Dock="Bottom" Margin="10" Width="1800"
-                                            materialDesign:HintAssist.Hint="Website"
-                                            Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                                            VerticalAlignment="Center"
-                                            Text="{Binding LinkToSite, Mode=TwoWay}"/>
-                                                <PasswordBox Margin="10, 0"
-                                            Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
-                                            IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
-                                            materialDesign:HintAssist.Hint="Password"/>
-                                                <TextBox Margin="10, 0"
-                                            Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                            materialDesign:HintAssist.Hint="Username"
-                                            Text="{Binding UserName, Mode=TwoWay}"/>
+                                                    materialDesign:HintAssist.Hint="Website"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding LinkToSite, Mode=TwoWay}"/>
+                                                <TextBox Width="150" Margin="10, 0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    Text="{Binding Password, Mode=TwoWay}"
+                                                    VerticalAlignment="Center"
+                                                    materialDesign:TextFieldAssist.SuffixText="{Binding Difficulty}">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Margin="0 0 0 0">
+                                                            <materialDesign:PackIcon
+                                                                Kind="Key" />
+                                                            <TextBlock Margin="2"
+                                                                Text="Password" />
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </TextBox>
+                                                <TextBox Width="150" Margin="10, 0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    Text="{Binding UserName, Mode=TwoWay}"
+                                                    VerticalAlignment="Center">
+                                                    <materialDesign:HintAssist.Hint>
+                                                        <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Margin="0 0 0 0">
+                                                            <materialDesign:PackIcon
+                                                                Kind="Account" />
+                                                            <TextBlock Margin="2"
+                                                                Text="Username" />
+                                                        </StackPanel>
+                                                    </materialDesign:HintAssist.Hint>
+                                                </TextBox>
                                             </DockPanel>
                                         </Grid>
                                     </DataTemplate>
