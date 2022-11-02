@@ -106,6 +106,16 @@ namespace _1Password
             }
         }
 
+        public void SortByName()
+        {
+            ClearAccounts();
+            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id).OrderBy(a => a.Name);
+            foreach (var item in collection)
+            {
+                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+            }
+        }
+
         public void ClearAccounts()
         {
             accounts.Clear();
@@ -132,7 +142,7 @@ namespace _1Password
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
-        public RelayCommand deleteCommand { get; set; }
+        private RelayCommand deleteCommand;
         public ICommand DeleteCmd => deleteCommand;
         public string Difficulty { get; set; }
 
