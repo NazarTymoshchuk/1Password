@@ -24,19 +24,12 @@ namespace _1Password
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
 
-        public User CurrentUser { get; set; }
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
         }
 
-        public void DeleteAccount()
-        {
-            IRepository<Account> repository = new Repository<Account>(context);
-
-
-            repository.Delete(CurrentUser.Id);
-        }
+        public User CurrentUser { get; set; }
 
         public void AddAccount(string name, string username, string password, string linkToSite)
         {
@@ -68,6 +61,41 @@ namespace _1Password
             accounts.Add(info);
         }
 
+        
+        public string CheckDifficulty(string password)
+        {
+            int difficulty = 0;
+            if (password.Any(c => char.IsDigit(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(c => char.IsLetter(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(c => char.IsUpper(c)) && password.Any(c => char.IsLower(c)))
+            {
+                difficulty++;
+            }
+            if (password.Any(ch => !char.IsLetterOrDigit(ch)))
+            {
+                difficulty++;
+            }
+            if (password.Length > 12)
+            {
+                difficulty++;
+            }
+            switch (difficulty)
+            {
+                case 1: return "Very easy";
+                case 2: return "Easy";
+                case 3: return "Normal";
+                case 4: return "Hard";
+                case 5: return "Very hard";
+                default: return "null";
+            }
+        }
+        
         public void AddAccountAfterLogIn()
         {
             IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
@@ -104,8 +132,8 @@ namespace _1Password
         public string Password { get; set; }
         public string LinkToSite { get; set; }
         public RelayCommand MyProperty { get; set; }
-
-        private RelayCommand deleteCommand;
         public ICommand DeleteCmd => deleteCommand;
+        public string Difficulty { get; set; }
+
     }
 }
