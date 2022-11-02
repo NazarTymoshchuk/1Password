@@ -129,7 +129,7 @@
                                                     Content="{materialDesign:PackIcon Kind=StarOutline}"
                                                     materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
                                                     IsChecked="False"/>
-                                                <Button DockPanel.Dock="Right"
+                                                <Button DockPanel.Dock="Right" Command="{Binding ChangeCmd}"
                                                 Foreground="#FF26D8FF"
                                                 Style="{StaticResource MaterialDesignIconButton}"
                                                 
