@@ -31,13 +31,7 @@ namespace _1Password
         {
             if (txtName.Text != "" && txtPassword.Password != "")
             {
-                viewModel.AddAccount(new AccountInfo() // new item inserting without MainWindow closing
-                {
-                    Name = txtName.Text,
-                    UserName = txtUsername.Text,
-                    Password = txtPassword.Password,
-                    LinkToSite = txtWebsite.Text
-                });
+                viewModel.AddAccount(txtName.Text, txtUsername.Text, txtPassword.Password, txtWebsite.Text); // new item inserting without MainWindow closing
                 this.Close();
             }
             else

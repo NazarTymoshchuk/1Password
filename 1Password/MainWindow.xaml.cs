@@ -30,7 +30,7 @@ namespace _1Password
             if (user != null)
             {
                 viewModel.CurrentUser = user;
-                viewModel.AddAccountToList();
+                viewModel.AddAccountAfterLogIn();
             }
             else
             {

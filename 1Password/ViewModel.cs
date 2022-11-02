@@ -1,5 +1,6 @@
 ﻿using data_base;
 using data_base.Entities;
+using data_base.Repositories;
 using PropertyChanged;
 using System;
 using System.Collections.Generic;
@@ -9,48 +10,70 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace _1Password
 {
     [AddINotifyPropertyChangedInterface]
     public class ViewModel
     {
-        public OnePasswordDbContext context = new OnePasswordDbContext(); // to connect AccountsInfo with Accounts in DB
+        public OnePasswordDbContext context = new OnePasswordDbContext();
         private ObservableCollection<AccountInfo> accounts;
+        public IEnumerable<AccountInfo> AccountsInfo => accounts;
+
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
+
+        public User CurrentUser { get; set; }
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
         }
-        public User CurrentUser { get; set; }
-        public IEnumerable<AccountInfo> AccountsInfo => accounts;
-        public void AddAccount(AccountInfo account)
+
+        public void DeleteAccount()
         {
-            accounts.Add(account);
-            context.Accounts.Add(new Account()
-            {
-                Name = account.Name,
-                Password = XORcipher.Encrypt(account.Password, key),
-                UserId = CurrentUser.Id,
-                UserName = account.UserName,
-                LinkToSite = account.LinkToSite,
-            });
-            context.SaveChanges();
+            IRepository<Account> repository = new Repository<Account>(context);
+
+
+            repository.Delete(CurrentUser.Id);
         }
 
-        public void AddAccountToList()
+        public void AddAccount(string name, string username, string password, string linkToSite)
+        {
+            Account account = new Account()
+            {
+                Name = name,
+                Password = XORcipher.Encrypt(password, key),
+                UserId = CurrentUser.Id,
+                UserName = username,
+                LinkToSite = linkToSite
+            };
+            context.Accounts.Add(account);
+            context.SaveChanges();
+
+            AddAccountToList(name, username, password, linkToSite, account);
+        }
+
+        public void AddAccountToList(string name, string username, string password, string linkToSite, Account account)
+        {
+            var info = new AccountInfo(name, username, XORcipher.Decrypt(password, key), linkToSite);
+
+            info.SetCommandDelete((o) =>
+            {
+                context.Accounts.Remove(account);
+                accounts.Remove(info);
+                context.SaveChanges();
+            });
+
+            accounts.Add(info);
+        }
+
+        public void AddAccountAfterLogIn()
         {
             IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
             foreach (var item in collection)
             {
-                accounts.Add(new AccountInfo()
-                {
-                    Name = item.Name,
-                    UserName = item.UserName,
-                    Password = XORcipher.Decrypt(item.Password, key),
-                    LinkToSite = item.LinkToSite
-                });
+                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
             }
         }
 
@@ -59,12 +82,30 @@ namespace _1Password
             accounts.Clear();
         }
     }
+
     [AddINotifyPropertyChangedInterface]
     public class AccountInfo
     {
+        public AccountInfo(string name, string username, string password, string linkToSite)
+        {
+            this.Name = name;
+            this.UserName = username;
+            this.Password = password;
+            this.LinkToSite = linkToSite;  
+        }
+
+        public void SetCommandDelete(Action<object> action)
+        {
+            deleteCommand = new RelayCommand((o) => action(o));
+        }
+
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
+        public RelayCommand MyProperty { get; set; }
+
+        private RelayCommand deleteCommand;
+        public ICommand DeleteCmd => deleteCommand;
     }
 }
