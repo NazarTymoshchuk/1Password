@@ -58,11 +58,18 @@
                     <DockPanel LastChildFill="True">
                         <Grid DockPanel.Dock="Top">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="3*"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="auto"/>
                             </Grid.ColumnDefinitions>
                             <TextBox Margin="5"
-                                Style="{StaticResource MaterialDesignOutlinedTextBox}"
-                                materialDesign:HintAssist.Hint="Search All Accounts"/>
+                                Style="{StaticResource MaterialDesignOutlinedTextBox}" Name="txtSearchByName"
+                                materialDesign:HintAssist.Hint="Search All Accounts" TextChanged="TextBox_TextChanged" KeyDown="txtSearchByName_KeyDown" TouchEnter="txtSearchByName_TouchEnter"/>
+                            <Button Grid.Column="1" Margin="5, 0" Height="40" Width="40" Background="#00bcd4"
+                                Content="{materialDesign:PackIcon Kind=Send,Size=20}"
+                                Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}"
+                                ToolTip="MaterialDesignFloatingActionMiniDarkButton"
+                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" HorizontalAlignment="Left" Click="Button_Click_2">
+                            </Button>
                         </Grid>
                         <DockPanel LastChildFill="False" DockPanel.Dock="Top">
                             <ComboBox Width="150" Margin="15, 0, 0, 0"
@@ -98,7 +105,7 @@
                             Content="{materialDesign:PackIcon Kind=Plus,Size=25}"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                             </Button>
-                            
+
                             <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" Grid.RowSpan="2">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>

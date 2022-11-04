@@ -138,6 +138,20 @@ namespace _1Password
             }
         }
 
+        public void SearchByName(string name)
+        {
+            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
+            ClearAccounts();
+
+            foreach (var item in collection)
+            {
+                if (item.Name.Contains(name))
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                }
+            }
+        }
+
         public void ClearAccounts()
         {
             accounts.Clear();

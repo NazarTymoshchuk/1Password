@@ -60,5 +60,27 @@ namespace _1Password
         {
             viewModel.SortByName();
         }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            viewModel.SearchByName(txtSearchByName.Text);
+        }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void txtSearchByName_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                viewModel.SearchByName(txtSearchByName.Text);
+            }
+        }
+
+        private void txtSearchByName_TouchEnter(object sender, TouchEventArgs e)
+        {
+        }
     }
 }
