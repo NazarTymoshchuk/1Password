@@ -101,5 +101,30 @@ namespace _1Password
             }
             return true;
         }
+
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (context.Users.FirstOrDefault(u => u.Username == txtUsername.Text) != null)
+                {
+                    User user = context.Users.Where(u => u.Username == txtUsername.Text).FirstOrDefault();
+                    if (Verify(txtPassword.Password, user.Password))
+                    {
+                        MainWindow mainWindow = new MainWindow(txtUsername.Text, txtPassword.Password, user);
+                        mainWindow.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        txtIncorrect.Text = "Incorrect password";
+                    }
+                }
+                else
+                {
+                    txtIncorrect.Text = "User not found";
+                }
+            }         
+        }
     }
 }

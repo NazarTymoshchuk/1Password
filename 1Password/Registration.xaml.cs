@@ -42,8 +42,6 @@ namespace _1Password
 
                     string hash = Hash(txtPassword.Password);
 
-                    MessageBox.Show(hash);
-
                     MainWindow main = new MainWindow(txtUsername.Text, hash, null);
 
                     main.Show();
@@ -87,6 +85,38 @@ namespace _1Password
         public static string Hash(string password)
         {
             return Hash(password, 10000);
+        }
+
+        private void txtUsername_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (context.Users.FirstOrDefault(u => u.Username == txtUsername.Text) == null)
+                {
+                    if (txtPassword.Password == txtComfirmPassword.Password)
+                    {
+
+                        string hash = Hash(txtPassword.Password);
+
+                        MessageBox.Show(hash);
+
+                        MainWindow main = new MainWindow(txtUsername.Text, hash, null);
+
+                        main.Show();
+                        this.Close();
+                    }
+                    else
+                    {
+                        txtError.Text = "Try again!";
+                        txtComfirmPassword.Password = "";
+                        txtPassword.Password = "";
+                    }
+                }
+                else
+                {
+                    txtUsernameTaken.Text = "Username is already taken";
+                }
+            }
         }
     }
 }

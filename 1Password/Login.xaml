@@ -41,7 +41,7 @@
             <TextBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtUsername"
                 Style="{StaticResource MaterialDesignOutlinedTextBox}"
                 VerticalAlignment="Top"
-                IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}"/>
+                IsEnabled="{Binding Path=IsChecked, ElementName=MaterialDesignOutlinedPasswordBoxEnabledComboBox}" KeyDown="txtUsername_KeyDown"/>
             <TextBlock DockPanel.Dock="Bottom" Margin="10, 0" Foreground="White"
                 Text="Username" />
         </DockPanel>
@@ -51,7 +51,7 @@
             <PasswordBox DockPanel.Dock="Bottom" Margin="10, 5" Name="txtPassword"
                 Style="{StaticResource MaterialDesignOutlinedRevealPasswordBox}"
                 IsEnabled="{Binding ElementName=RevealPasswordOutlinedEnabled, Path=IsChecked}"
-                materialDesign:TextFieldAssist.HasClearButton="True"/>
+                materialDesign:TextFieldAssist.HasClearButton="True" KeyDown="txtUsername_KeyDown"/>
             <TextBlock DockPanel.Dock="Bottom" Margin="10, 0"
                 Foreground="White"
                 Text="Password" />
