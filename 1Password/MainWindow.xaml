@@ -128,11 +128,12 @@
                                                 </Button>
                                                 <ToggleButton DockPanel.Dock="Right" Margin="10"
                                                     Foreground="#ffc107"
+                                                    Command="{Binding MoveToFavoriteCommand}"
                                                     Style="{StaticResource MaterialDesignActionToggleButton}"
                                                     ToolTip="MaterialDesignActionLightToggleButton"
                                                     Content="{materialDesign:PackIcon Kind=StarOutline}"
                                                     materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
-                                                    IsChecked="False"/>
+                                                    IsChecked="{Binding isInFavorite, Mode=TwoWay}"/>
                                                 <Button DockPanel.Dock="Right" Command="{Binding ChangeCmd}"
                                                 Foreground="#FF26D8FF"
                                                 Style="{StaticResource MaterialDesignIconButton}"
@@ -217,6 +218,80 @@
                             Text="Favorites" />
                         </StackPanel>
                     </TabItem.Header>
+                    <ListBox ItemsSource="{Binding FavouriteAccountsInfo}" Name="FavouriteList" Grid.RowSpan="2" Grid.ColumnSpan="2">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <DockPanel LastChildFill="False">
+                                        <Border BorderBrush="Aqua"
+                                            BorderThickness="2"
+                                            CornerRadius="50"
+                                            Width="70"
+                                            Height="70"
+                                            Margin="20, 10"/>
+                                        <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="26" Margin="5"/>
+                                    </DockPanel>
+                                    <DockPanel Grid.Row="1" LastChildFill="False">
+                                        <TextBox IsReadOnly="True" DockPanel.Dock="Bottom" Margin="10" Width="1800"
+                                                    materialDesign:HintAssist.Hint="Website"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding LinkToSite, Mode=TwoWay}"/>
+                                        <TextBox IsReadOnly="True" Width="150" Margin="10, 0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    Text="{Binding Password, Mode=TwoWay}"
+                                                    VerticalAlignment="Center"
+                                                    materialDesign:TextFieldAssist.SuffixText="{Binding Difficulty}">
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Margin="0 0 0 0">
+                                                    <materialDesign:PackIcon
+                                                                Kind="Key" />
+                                                    <TextBlock Margin="2"
+                                                                Text="Password" />
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </TextBox>
+                                        <TextBox IsReadOnly="True" Width="150" Margin="10, 0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    Text="{Binding UserName, Mode=TwoWay}"
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Margin="0 0 0 0">
+                                                    <materialDesign:PackIcon
+                                                                Kind="Account" />
+                                                    <TextBlock Margin="2"
+                                                                Text="Username" />
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </TextBox>
+                                        <TextBox IsReadOnly="True" Width="150" Margin="10, 0"
+                                                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                                                    Text="{Binding CategoryName, Mode=TwoWay}"
+                                                    VerticalAlignment="Center">
+                                            <materialDesign:HintAssist.Hint>
+                                                <StackPanel
+                                                            Orientation="Horizontal"
+                                                            Margin="0 0 0 0">
+                                                    <materialDesign:PackIcon
+                                                                Kind="Account" />
+                                                    <TextBlock Margin="2"
+                                                                Text="Category" />
+                                                </StackPanel>
+                                            </materialDesign:HintAssist.Hint>
+                                        </TextBox>
+                                    </DockPanel>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
                 </TabItem>
             </TabControl>
         </materialDesign:Card>

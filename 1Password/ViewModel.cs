@@ -27,9 +27,12 @@ namespace _1Password
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
         public Category SelectedCategory { get; set; }
+        private ObservableCollection<AccountInfo> favouriteAccounts;
+        public IEnumerable<AccountInfo> FavouriteAccountsInfo => favouriteAccounts;
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
+            favouriteAccounts = new ObservableCollection<AccountInfo>();
             categories = new ObservableCollection<Category>(context.Categories);
         }
 
@@ -73,6 +76,7 @@ namespace _1Password
 
             info.SetCommandDelete((o) =>
             {
+                favouriteAccounts.Remove(info);
                 context.Accounts.Remove(account);
                 accounts.Remove(info);
                 context.SaveChanges();
@@ -84,6 +88,17 @@ namespace _1Password
                 account.LinkToSite = info.LinkToSite;
                 context.Accounts.Update(account);
                 context.SaveChanges();
+            });
+            info.SetCommandMoveToFavorite((o) =>
+            {
+                if (info.isInFavorite == false)
+                {
+                    favouriteAccounts.Remove(info);
+                }
+                else
+                {
+                    favouriteAccounts.Add(info);
+                }
             });
 
             info.Difficulty = CheckDifficulty(password);
@@ -234,15 +249,22 @@ namespace _1Password
         {
             changeCommand = new RelayCommand((o) => action(o));
         }
+        public void SetCommandMoveToFavorite(Action<object> action)
+        {
+            moveToFavoriteCommand = new RelayCommand((o) => action(o));
+        }
         public string Name { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
         public string LinkToSite { get; set; }
         private RelayCommand deleteCommand;
         private RelayCommand changeCommand;
+        private RelayCommand moveToFavoriteCommand;
         public ICommand DeleteCmd => deleteCommand;
         public ICommand ChangeCmd => changeCommand;
+        public ICommand MoveToFavoriteCommand => moveToFavoriteCommand;
         public string Difficulty { get; set; }
         public string CategoryName { get; set; }
+        public bool isInFavorite { get; set; }
     }
 }
