@@ -24,7 +24,7 @@ namespace data_base
         }
         public static void SeedCategories(this ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Category>().HasData(new Category[]
+            /*modelBuilder.Entity<Category>().HasData(new Category[]
                 {
                     new Category()
                     {
@@ -37,7 +37,7 @@ namespace data_base
                         Name = "Category2",
                     },
                 }
-            );
+            );*/
         }
         public static void SeedAccounts(this ModelBuilder modelBuilder)
         {

@@ -21,5 +21,6 @@ namespace data_base.Entities
         public string LinkToSite { get; set; }
         public int? CategoryId { get; set; }
         public Category Category { get; set; }
+        public bool isFavorite { get; set; }
     }
 }
