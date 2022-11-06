@@ -22,17 +22,20 @@ namespace _1Password
         private ObservableCollection<AccountInfo> accounts;
         public IEnumerable<AccountInfo> AccountsInfo => accounts;
 
+        private ObservableCollection<Category> categories;
+        public IEnumerable<Category> Categories => categories;
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
-
+        public Category SelectedCategory { get; set; }
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
+            categories = new ObservableCollection<Category>(context.Categories);
         }
 
         public User CurrentUser { get; set; }
 
-        public void AddAccount(string name, string username, string password, string linkToSite)
+        public void AddAccount(string name, string username, string password, string linkToSite, string categoryName)
         {
             Account account = new Account()
             {
@@ -40,17 +43,18 @@ namespace _1Password
                 Password = XORcipher.Encrypt(password, key),
                 UserId = CurrentUser.Id,
                 UserName = username,
-                LinkToSite = linkToSite
+                LinkToSite = linkToSite,
+                CategoryId = context.Categories.Where(c => c.Name == categoryName).First().Id,
             };
             context.Accounts.Add(account);
             context.SaveChanges();
 
-            AddAccountToList(name, username, password, linkToSite, account);
+            AddAccountToList(name, username, password, linkToSite, account, categoryName);
         }
 
-        public void AddAccountToList(string name, string username, string password, string linkToSite, Account account)
+        public void AddAccountToList(string name, string username, string password, string linkToSite, Account account, string categoryName)
         {
-            var info = new AccountInfo(name, username, password, linkToSite);
+            var info = new AccountInfo(name, username, password, linkToSite, categoryName);
 
             info.SetCommandDelete((o) =>
             {
@@ -71,7 +75,23 @@ namespace _1Password
 
             accounts.Add(info);
         }
-
+        public void FilterByCategory()
+        {
+            IQueryable<Account> collection;
+            ClearAccounts();
+            collection = context.Accounts.Where(a => a.Category.Name == SelectedCategory.Name);
+            foreach (var item in collection)
+            {
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "");
+                }
+            }
+        }
         public string CheckDifficulty(string password)
         {
             int difficulty = 0;
@@ -111,7 +131,14 @@ namespace _1Password
             IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
             foreach (var item in collection)
             {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);           
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "");
+                }
             }
         }
 
@@ -134,7 +161,14 @@ namespace _1Password
 
             foreach (var item in collection)
             {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "");
+                }
             }
         }
 
@@ -147,7 +181,14 @@ namespace _1Password
             {
                 if (item.Name.Contains(name))
                 {
-                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                    if (item.Category != null)
+                    {
+                        AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name);
+                    }
+                    else
+                    {
+                        AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "");
+                    }
                 }
             }
         }
@@ -161,12 +202,13 @@ namespace _1Password
     [AddINotifyPropertyChangedInterface]
     public class AccountInfo
     {
-        public AccountInfo(string name, string username, string password, string linkToSite)
+        public AccountInfo(string name, string username, string password, string linkToSite, string categoryName)
         {
             this.Name = name;
             this.UserName = username;
             this.Password = password;
-            this.LinkToSite = linkToSite;  
+            this.LinkToSite = linkToSite;
+            this.CategoryName = categoryName;
         }
 
         public void SetCommandDelete(Action<object> action)
@@ -186,6 +228,6 @@ namespace _1Password
         public ICommand DeleteCmd => deleteCommand;
         public ICommand ChangeCmd => changeCommand;
         public string Difficulty { get; set; }
-
+        public string CategoryName { get; set; }
     }
 }

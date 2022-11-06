@@ -52,7 +52,7 @@ namespace _1Password
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddNewItem item = new AddNewItem(viewModel); // new AddNewItem window invoke
+            AddNewItem item = new AddNewItem(viewModel);
             item.Show();
         }
 
@@ -81,6 +81,11 @@ namespace _1Password
 
         private void txtSearchByName_TouchEnter(object sender, TouchEventArgs e)
         {
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.FilterByCategory();
         }
     }
 }
