@@ -72,6 +72,37 @@ namespace _1Password
             accounts.Add(info);
         }
 
+        public void AddAccountAfterLogIn()
+        {
+            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
+            foreach (var item in collection)
+            {
+                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);           
+            }
+        }
+
+        public void AddUser(string username, string password)
+        {
+            User user = new User()
+            {
+                Username = username,
+                Password = password
+            };
+
+            context.Users.Add(user);
+            CurrentUser = user;
+            context.SaveChanges();
+        }
+
+        public void ChangeUser(string username, string password)
+        {
+            CurrentUser.Username = username;
+            CurrentUser.Password = password;
+
+            context.Users.Update(CurrentUser);
+            context.SaveChanges();
+        }
+
         public string CheckDifficulty(string password)
         {
             int difficulty = 0;
@@ -103,15 +134,6 @@ namespace _1Password
                 case 4: return "Hard";
                 case 5: return "Very hard";
                 default: return "null";
-            }
-        }
-        
-        public void AddAccountAfterLogIn()
-        {
-            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
-            foreach (var item in collection)
-            {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);           
             }
         }
 
@@ -159,6 +181,19 @@ namespace _1Password
     }
 
     [AddINotifyPropertyChangedInterface]
+    public class ProfileInfo
+    {
+        public ProfileInfo(string username, string password)
+        {
+            this.Username = username;
+            this.Password = password;
+        }
+
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
+    [AddINotifyPropertyChangedInterface]
     public class AccountInfo
     {
         public AccountInfo(string name, string username, string password, string linkToSite)
@@ -186,6 +221,5 @@ namespace _1Password
         public ICommand DeleteCmd => deleteCommand;
         public ICommand ChangeCmd => changeCommand;
         public string Difficulty { get; set; }
-
     }
 }

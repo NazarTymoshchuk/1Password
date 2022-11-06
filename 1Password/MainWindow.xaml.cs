@@ -34,13 +34,7 @@ namespace _1Password
             }
             else
             {
-                viewModel.context.Users.Add(new User()
-                {
-                    Username = username,
-                    Password = password,
-                });
-                viewModel.context.SaveChanges();
-                viewModel.CurrentUser = viewModel.context.Users.Where(u => u.Username == username).FirstOrDefault();
+                viewModel.AddUser(username, password);
             }
             this.DataContext = viewModel;
         }
@@ -81,6 +75,12 @@ namespace _1Password
 
         private void txtSearchByName_TouchEnter(object sender, TouchEventArgs e)
         {
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            Profile profile = new Profile(viewModel);
+            profile.Show();
         }
     }
 }

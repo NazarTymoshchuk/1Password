@@ -36,8 +36,8 @@
                 Style="{StaticResource MaterialDesignNavigationRailTabControl}">
                 <materialDesign:NavigationRailAssist.FloatingContent>
                     <Button
-                    Margin="8"
-                    Content="{materialDesign:PackIcon Kind=AccountBadge}"
+                    Margin="8" Click="Button_Click_3"
+                    Content="{materialDesign:PackIcon Kind=AccountBadge, Size=20}"
                     Style="{StaticResource MaterialDesignFloatingActionAccentButton}"/>
                 </materialDesign:NavigationRailAssist.FloatingContent>
                 <TabItem>
@@ -116,26 +116,26 @@
                                             </Grid.RowDefinitions>
                                             <DockPanel LastChildFill="False">
                                                 <Border BorderBrush="Aqua"
-                                            BorderThickness="2"
-                                            CornerRadius="50"
-                                            Width="70"
-                                            Height="70"
-                                            Margin="20, 10"/>
+                                                        BorderThickness="2"
+                                                        CornerRadius="50"
+                                                        Width="70"
+                                                        Height="70"
+                                                        Margin="20, 10"/>
                                                 <TextBlock Text="{Binding Name, Mode=TwoWay}" VerticalAlignment="Center" FontSize="26" Margin="5"/>
                                                 <Button DockPanel.Dock="Right" Command="{Binding DeleteCmd}"
-                                                Style="{StaticResource MaterialDesignIconButton}"
-                                                ToolTip="MaterialDesignIconButton"
-                                                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
+                                                        Style="{StaticResource MaterialDesignIconButton}"
+                                                        ToolTip="MaterialDesignIconButton"
+                                                        IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}">
                                                     <materialDesign:PackIcon
-                                                    Kind="DeleteForever" />
+                                                        Kind="DeleteForever" />
                                                 </Button>
                                                 <ToggleButton DockPanel.Dock="Right" Margin="10"
-                                                    Foreground="#ffc107"
-                                                    Style="{StaticResource MaterialDesignActionToggleButton}"
-                                                    ToolTip="MaterialDesignActionLightToggleButton"
-                                                    Content="{materialDesign:PackIcon Kind=StarOutline}"
-                                                    materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
-                                                    IsChecked="False"/>
+                                                        Foreground="#ffc107"
+                                                        Style="{StaticResource MaterialDesignActionToggleButton}"
+                                                        ToolTip="MaterialDesignActionLightToggleButton"
+                                                        Content="{materialDesign:PackIcon Kind=StarOutline}"
+                                                        materialDesign:ToggleButtonAssist.OnContent="{materialDesign:PackIcon Kind=Star}" 
+                                                        IsChecked="False"/>
                                                 <Button DockPanel.Dock="Right" Command="{Binding ChangeCmd}"
                                                 Foreground="#FF26D8FF"
                                                 Style="{StaticResource MaterialDesignIconButton}"
