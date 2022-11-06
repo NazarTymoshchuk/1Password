@@ -46,7 +46,7 @@ namespace _1Password
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            AddNewItem item = new AddNewItem(viewModel); // new AddNewItem window invoke
+            AddNewItem item = new AddNewItem(viewModel);
             item.Show();
         }
 
@@ -81,6 +81,11 @@ namespace _1Password
         {
             Profile profile = new Profile(viewModel);
             profile.Show();
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            viewModel.FilterByCategory();
         }
     }
 }

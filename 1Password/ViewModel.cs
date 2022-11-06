@@ -2,15 +2,14 @@
 using data_base.Entities;
 using data_base.Repositories;
 using PropertyChanged;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Principal;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Input;
 using System.Xml.Linq;
 
 namespace _1Password
@@ -21,39 +20,64 @@ namespace _1Password
         public OnePasswordDbContext context = new OnePasswordDbContext();
         private ObservableCollection<AccountInfo> accounts;
         public IEnumerable<AccountInfo> AccountsInfo => accounts;
-
+        private ObservableCollection<Category> categories;
+        public IEnumerable<Category> Categories => categories;
         XORCipher XORcipher = new XORCipher();
         string key = @"><w\\Dr{GlZIp.x8CFp&i:^HB4B<x#Fpmn0kw,sC>vY&evTwGtqV6r1sDR8@cP#-4nsgXlmqkYH0Iz$.D5fzeE+cl%:I8XN+P4o0s";
-
+        public Category SelectedCategory { get; set; }
+        private ObservableCollection<AccountInfo> favoriteAccounts;
+        public IEnumerable<AccountInfo> FavoriteAccountsInfo => favoriteAccounts;
         public ViewModel()
         {
             accounts = new ObservableCollection<AccountInfo>();
+            favoriteAccounts = new ObservableCollection<AccountInfo>();
+            categories = new ObservableCollection<Category>(context.Categories);
         }
 
         public User CurrentUser { get; set; }
 
-        public void AddAccount(string name, string username, string password, string linkToSite)
+        public void AddAccount(string name, string username, string password, string linkToSite, string categoryName, bool isFavorite)
         {
-            Account account = new Account()
+            context.Categories.Remove(SelectedCategory);
+            Account account;
+            if (categoryName != "")
             {
-                Name = name,
-                Password = XORcipher.Encrypt(password, key),
-                UserId = CurrentUser.Id,
-                UserName = username,
-                LinkToSite = linkToSite
-            };
+                account = new Account()
+                {
+                    Name = name,
+                    Password = XORcipher.Encrypt(password, key),
+                    UserId = CurrentUser.Id,
+                    UserName = username,
+                    LinkToSite = linkToSite,
+                    CategoryId = context.Categories.Where(c => c.Name == categoryName).First().Id,
+                    isFavorite = isFavorite,
+                };
+            }
+            else
+            {
+                account = new Account()
+                {
+                    Name = name,
+                    Password = XORcipher.Encrypt(password, key),
+                    UserId = CurrentUser.Id,
+                    UserName = username,
+                    LinkToSite = linkToSite,
+                    isFavorite = isFavorite,
+                };
+            }
             context.Accounts.Add(account);
             context.SaveChanges();
 
-            AddAccountToList(name, username, password, linkToSite, account);
+            AddAccountToList(name, username, password, linkToSite, account, categoryName, isFavorite);
         }
 
-        public void AddAccountToList(string name, string username, string password, string linkToSite, Account account)
+        public void AddAccountToList(string name, string username, string password, string linkToSite, Account account, string categoryName, bool isFavorite)
         {
-            var info = new AccountInfo(name, username, password, linkToSite);
+            var info = new AccountInfo(name, username, password, linkToSite, categoryName);
 
             info.SetCommandDelete((o) =>
             {
+                favoriteAccounts.Remove(info);
                 context.Accounts.Remove(account);
                 accounts.Remove(info);
                 context.SaveChanges();
@@ -66,8 +90,27 @@ namespace _1Password
                 context.Accounts.Update(account);
                 context.SaveChanges();
             });
+            info.SetCommandMoveToFavorite((o) =>
+            {
+                if (info.isInFavorite == false)
+                {
+                    favoriteAccounts.Remove(info);
+                }
+                else
+                {
+                    favoriteAccounts.Add(info);
+                }
+                account.isFavorite = info.isInFavorite;
+                context.Accounts.Update(account);
+                context.SaveChanges();
+            });
 
             info.Difficulty = CheckDifficulty(password);
+            info.isInFavorite = isFavorite;
+            if (info.isInFavorite)
+            {
+                favoriteAccounts.Add(info);
+            }
 
             accounts.Add(info);
         }
@@ -128,12 +171,28 @@ namespace _1Password
             }
             switch (difficulty)
             {
-                case 1: return "Very easy";
-                case 2: return "Easy";
-                case 3: return "Normal";
-                case 4: return "Hard";
-                case 5: return "Very hard";
+                case 1: return " Very easy";
+                case 2: return " Easy";
+                case 3: return " Normal";
+                case 4: return " Hard";
+                case 5: return " Very hard";
                 default: return "null";
+            }
+        }
+        
+        public void AddAccountAfterLogIn()
+        {
+            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
+            foreach (var item in collection)
+            {
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name, item.isFavorite);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "", item.isFavorite);
+                }
             }
         }
 
@@ -156,7 +215,14 @@ namespace _1Password
 
             foreach (var item in collection)
             {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name, item.isFavorite);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "", item.isFavorite);
+                }
             }
         }
 
@@ -169,7 +235,14 @@ namespace _1Password
             {
                 if (item.Name.Contains(name))
                 {
-                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);
+                    if (item.Category != null)
+                    {
+                        AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name, item.isFavorite);
+                    }
+                    else
+                    {
+                        AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "", item.isFavorite);
+                    }
                 }
             }
         }

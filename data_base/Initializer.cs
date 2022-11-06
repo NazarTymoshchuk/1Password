@@ -31,6 +31,11 @@ namespace data_base
                         Id = 1,
                         Name = "Category1",
                     },
+                    new Category()
+                    {
+                        Id = 2,
+                        Name = "Category2",
+                    },
                 }
             );*/
         }

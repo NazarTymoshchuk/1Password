@@ -24,14 +24,13 @@ namespace data_base
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             base.OnConfiguring(optionsBuilder);
-
-            string connect = ConfigurationManager.ConnectionStrings["1PasswordDb"].ConnectionString;
-            optionsBuilder.UseSqlServer(connect);
+            optionsBuilder.UseSqlServer(@"workstation id=1PasswordDb.mssql.somee.com;packet size=4096;user id=Nazar_SQLLogin_1;pwd=s1m4ra7oyo;data source=1PasswordDb.mssql.somee.com;persist security info=False;initial catalog=1PasswordDb");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserConfig).Assembly);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CategoryConfig).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AccountsConfig).Assembly);
             modelBuilder.SeedClients();
             modelBuilder.SeedAccounts();
             modelBuilder.SeedCategories();
