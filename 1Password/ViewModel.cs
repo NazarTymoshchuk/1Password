@@ -147,11 +147,11 @@ namespace _1Password
             }
             switch (difficulty)
             {
-                case 1: return "Very easy";
-                case 2: return "Easy";
-                case 3: return "Normal";
-                case 4: return "Hard";
-                case 5: return "Very hard";
+                case 1: return " Very easy";
+                case 2: return " Easy";
+                case 3: return " Normal";
+                case 4: return " Hard";
+                case 5: return " Very hard";
                 default: return "null";
             }
         }

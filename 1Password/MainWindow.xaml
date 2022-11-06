@@ -96,14 +96,16 @@
                                 <RowDefinition Height="5*"/>
                                 <RowDefinition/>
                             </Grid.RowDefinitions>
-                            <Button HorizontalAlignment="Right" Margin="0,7,20,16" Grid.Row="1" Click="Button_Click"
-                            Foreground="Black" Panel.ZIndex="1" Background="#00bcd4"
+
+                            <Button HorizontalAlignment="Right" Margin="0, 0, 20, 10" Grid.Row="1" Click="Button_Click"
+                            Foreground="White" Panel.ZIndex="1" Background="#00bcd4"
+
                             Style="{StaticResource MaterialDesignFloatingActionDarkButton}"
                             Content="{materialDesign:PackIcon Kind=Plus,Size=25}"
                             IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}" Grid.Column="1">
                             </Button>
-
                             <ListBox ItemsSource="{Binding AccountsInfo}" Name="listApp" Grid.RowSpan="2" Grid.ColumnSpan="2">
+
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
                                         <Grid>
