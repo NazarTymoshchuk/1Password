@@ -24,15 +24,20 @@ namespace data_base
         }
         public static void SeedCategories(this ModelBuilder modelBuilder)
         {
-            /*modelBuilder.Entity<Category>().HasData(new Category[]
+            modelBuilder.Entity<Category>().HasData(new Category[]
                 {
                     new Category()
                     {
                         Id = 1,
                         Name = "Category1",
                     },
+                    new Category()
+                    {
+                        Id = 2,
+                        Name = "Category2",
+                    },
                 }
-            );*/
+            );
         }
         public static void SeedAccounts(this ModelBuilder modelBuilder)
         {
