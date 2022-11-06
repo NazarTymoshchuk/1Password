@@ -25,18 +25,16 @@ namespace _1Password
         {
             InitializeComponent();
             this.viewModel = viewModel;
+            comboBoxCategory.ItemsSource = viewModel.Categories;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             if (txtName.Text != "" && txtPassword.Text != "")
             {
-                viewModel.AddAccount(txtName.Text, txtUsername.Text, txtPassword.Text, txtWebsite.Text); // new item inserting without MainWindow closing
+                viewModel.AddAccount(txtName.Text, txtUsername.Text, txtPassword.Password, txtWebsite.Text, comboBoxCategory.Text); // new item inserting without MainWindow closing
+
                 this.Close();
-            }
-            else
-            {
-                // values cannot be null message
             }
         }
 
