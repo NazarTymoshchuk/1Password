@@ -37,15 +37,30 @@ namespace _1Password
 
         public void AddAccount(string name, string username, string password, string linkToSite, string categoryName)
         {
-            Account account = new Account()
+            Account account;
+            if (categoryName != "")
             {
-                Name = name,
-                Password = XORcipher.Encrypt(password, key),
-                UserId = CurrentUser.Id,
-                UserName = username,
-                LinkToSite = linkToSite,
-                CategoryId = context.Categories.Where(c => c.Name == categoryName).First().Id,
-            };
+                account = new Account()
+                {
+                    Name = name,
+                    Password = XORcipher.Encrypt(password, key),
+                    UserId = CurrentUser.Id,
+                    UserName = username,
+                    LinkToSite = linkToSite,
+                    CategoryId = context.Categories.Where(c => c.Name == categoryName).First().Id,
+                };
+            }
+            else
+            {
+                account = new Account()
+                {
+                    Name = name,
+                    Password = XORcipher.Encrypt(password, key),
+                    UserId = CurrentUser.Id,
+                    UserName = username,
+                    LinkToSite = linkToSite,
+                };
+            }
             context.Accounts.Add(account);
             context.SaveChanges();
 
