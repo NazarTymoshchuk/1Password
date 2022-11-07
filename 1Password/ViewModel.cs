@@ -113,16 +113,23 @@ namespace _1Password
 
             accounts.Add(info);
         }
-
-        public void AddAccountAfterLogIn()
+        public void FilterByCategory()
         {
-            IQueryable<Account> collection = context.Accounts.Where(a => a.UserId == CurrentUser.Id);
+            IQueryable<Account> collection;
+            ClearAccounts();
+            collection = context.Accounts.Where(a => a.Category.Name == SelectedCategory.Name);
             foreach (var item in collection)
             {
-                AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item);           
+                if (item.Category != null)
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, item.Category.Name, item.isFavorite);
+                }
+                else
+                {
+                    AddAccountToList(item.Name, item.UserName, XORcipher.Decrypt(item.Password, key), item.LinkToSite, item, "", item.isFavorite);
+                }
             }
         }
-
         public void AddUser(string username, string password)
         {
             User user = new User()
@@ -251,48 +258,5 @@ namespace _1Password
             accounts.Clear();
             favoriteAccounts.Clear();
         }
-    }
-
-    [AddINotifyPropertyChangedInterface]
-    public class ProfileInfo
-    {
-        public ProfileInfo(string username, string password)
-        {
-            this.Username = username;
-            this.Password = password;
-        }
-
-        public string Username { get; set; }
-        public string Password { get; set; }
-    }
-
-    [AddINotifyPropertyChangedInterface]
-    public class AccountInfo
-    {
-        public AccountInfo(string name, string username, string password, string linkToSite)
-        {
-            this.Name = name;
-            this.UserName = username;
-            this.Password = password;
-            this.LinkToSite = linkToSite;  
-        }
-
-        public void SetCommandDelete(Action<object> action)
-        {
-            deleteCommand = new RelayCommand((o) => action(o));
-        }
-        public void SetCommandChange(Action<object> action)
-        {
-            changeCommand = new RelayCommand((o) => action(o));
-        }
-        public string Name { get; set; }
-        public string UserName { get; set; }
-        public string Password { get; set; }
-        public string LinkToSite { get; set; }
-        private RelayCommand deleteCommand;
-        private RelayCommand changeCommand;
-        public ICommand DeleteCmd => deleteCommand;
-        public ICommand ChangeCmd => changeCommand;
-        public string Difficulty { get; set; }
-    }
+    }  
 }
