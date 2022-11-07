@@ -38,7 +38,6 @@ namespace _1Password
 
         public void AddAccount(string name, string username, string password, string linkToSite, string categoryName, bool isFavorite)
         {
-            context.Categories.Remove(SelectedCategory);
             Account account;
             if (categoryName != "")
             {
@@ -235,6 +234,7 @@ namespace _1Password
         public void ClearAccounts()
         {
             accounts.Clear();
+            favoriteAccounts.Clear();
         }
     }
 }
